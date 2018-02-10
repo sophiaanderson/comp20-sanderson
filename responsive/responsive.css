@@ -1,0 +1,22 @@
+
+/*  Sophia Anderson
+    Lab 3
+    responsive.css */
+
+.k8em0 {width: 12000px; 
+        height:12000px;
+        background: url(k8em0.jpg) no-repeat 0 0px};}
+
+.straightface {width:600px; height:600px; 
+               background: url(k8em0.jpg) 0 0px} /* top left */
+
+.overit {width:600px; height:600px; 
+         background: url(k8em0.jpg) 600 0px} /* top right */
+
+.talking {width:600px; height:600px; 
+          background: url(k8em0.jpg) 0 -600px} /* bottom left */
+
+.smiling {width:600px; height:600px; 
+          background: url(k8em0.jpg) 600 -600px} /* bottom right */
+
+
