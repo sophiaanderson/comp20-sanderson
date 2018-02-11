@@ -3,20 +3,27 @@
     Lab 3
     responsive.css */
 
-.k8em0 {width: 12000px; 
-        height:12000px;
-        background: url(k8em0.jpg) no-repeat 0 0px};}
 
-.straightface {width:600px; height:600px; 
-               background: url(k8em0.jpg) 0 0px} /* top left */
+@media screen and (min-width: 1201px) {
+    .k8em0 {width:600px; height:600px; 
+               background: url(k8em0.jpg); 
+               background-position: 0px 0px}
+}
 
-.overit {width:600px; height:600px; 
-         background: url(k8em0.jpg) 600 0px} /* top right */
+@media screen and (min-width: 901px) and (max-width: 1200px) {
+    .k8em0 {width:600px; height:600px; 
+               background: url(k8em0.jpg); 
+               background-position: 600px 0px}
+}
 
-.talking {width:600px; height:600px; 
-          background: url(k8em0.jpg) 0 -600px} /* bottom left */
+@media screen and (min-width: 601px) and (max-width: 900px) {
+        .k8em0 {width:600px; height:600px; 
+               background: url(k8em0.jpg); 
+               background-position: 0px 600px}
+}
 
-.smiling {width:600px; height:600px; 
-          background: url(k8em0.jpg) 600 -600px} /* bottom right */
-
-
+@media screen and (min-width: 0px) and (max-width: 600px) {
+        .k8em0 {width:600px; height:600px; 
+               background: url(k8em0.jpg); 
+               background-position: 600px 600px}
+}
