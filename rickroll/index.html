@@ -14,7 +14,32 @@
 <div id="lyrics"></div>
 
 <script>
-    // Complete this section and create a CSS file named style.css
+  /* function playvideo() {
+    var video = document.getElementById("rickroll"), track;
+    
+
+    video.addEventListener("loadedmetadata", function() {
+       track = this.addTextTrack("captions", "English", "en");
+    });
+
+    track.mode = "showing"; 
+
+    track.addCue(new VTTCue(18, 34, "We're no strangers to love. You know the rules and so do I. A full commitment's what I'm thinking of. You wouldn't get this from any other guy")); 
+}*/
+
+var video = document.getElementById("rickroll");
+   var startTime, endTime, message;
+   var newTextTrack = video.addTextTrack("captions", "sample");
+   newTextTrack.mode = newTextTrack.SHOWING; // set track to display
+   // create some cues and add them to the new track 
+  newTextTrack.addCue(new TextTrackCue(0,10, "never gonna give you up"); 
+   /*for (var i = 0; i < 30; i++) {
+     startTime = i * 5;
+     endTime = ((i * 5) + 5);
+     message = "This is number " + i;
+     newTextTrack.addCue(new TextTrackCue(startTime, endTime, message));
+   }*/
+   video.play();
 </script>
 </body>
 </html> 
