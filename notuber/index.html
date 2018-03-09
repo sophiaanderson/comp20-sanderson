@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="notUberStyle.css">
+
+<meta name="viewport" content="initial-scale=1.0">
+<meta charset="utf-8">
+ <body>
+    <div id = "map"></div>
+    <p id = "loc"></p>
+
+    <script>
+      var map;
+      var currentLat; 
+      var currentLng; 
+      var location = document.getElementById("loc"); 
+
+    function getCurrentLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } 
+
+        else { 
+            location.innerHTML = "Geolocation is not supported by this browser.";
+        } 
+        currentLng = position.coords.latitude; 
+        currentLat = position.coords.longitude; 
+      }
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: currentLat, lng: currentLng},
+          zoom: 8
+        });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnC6Yb6d3tzMO1F9WkqEnIUZQ7QHdpkb4&callback=initMap"
+    async defer></script>
+  </body>
+
+  </html>
