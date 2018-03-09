@@ -1,39 +1,69 @@
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="notUberStyle.css">
+<!-- <link rel="stylesheet" href="notUberStyle.css"> -->
 
 <meta name="viewport" content="initial-scale=1.0">
 <meta charset="utf-8">
  <body>
-    <div id = "map"></div>
+    <p id = "map"></p>
     <p id = "loc"></p>
 
-    <script>
-      var map;
-      var currentLat; 
-      var currentLng; 
-      var location = document.getElementById("loc"); 
+
+<script>
+      var currentLat = 0;  
+      var currentLng = 0; 
+      var mylocation = new google.maps.LatLng(currentLat, currentLng); 
+      var mapOptions = {
+        zoom: 8,
+        center: mylocation,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }; 
+
+    var map;
+    var marker;
+    var informationWindow = new google.maps.InfoWindow();
+    init();
+
+    function init() {
+        map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        getCurrentLocation();
+    }
 
     function getCurrentLocation() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        } 
-
+            navigator.geolocation.getCurrentPosition(function(position) {
+            currentLng = position.coords.latitude; 
+            currentLat = position.coords.longitude; 
+            initMap(); 
+            });
+        }
+    
         else { 
             location.innerHTML = "Geolocation is not supported by this browser.";
         } 
-        currentLng = position.coords.latitude; 
-        currentLat = position.coords.longitude; 
-      }
+    }
 
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: currentLat, lng: currentLng},
-          zoom: 8
+    function initMap() {    
+        mylocation = new google.maps.LatLng(currentLat, currentLng);
+        map.panTo(mylocation);
+
+        marker = new google.maps.Marker({
+            position: mylocation,
+            title: "Here I Am!"
         });
-      }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnC6Yb6d3tzMO1F9WkqEnIUZQ7QHdpkb4&callback=initMap"
+
+
+        marker.setMap(map);
+
+        google.maps.event.addListener(marker, 'click', function() {
+            informationWindow.setContent(marker.title);
+            informationWindow.open(map, marker);
+        });
+    }
+
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnC6Yb6d3tzMO1F9WkqEnIUZQ7QHdpkb4&callback=initMap"
     async defer></script>
   </body>
 
