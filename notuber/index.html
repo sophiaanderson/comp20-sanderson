@@ -8,8 +8,10 @@
   </head>
   <body>
     <div id="map"></div>
+    
     <script>
-      var map, infoWindow;
+      var map, infoWindow, myLoc;
+      var myUsername = "1vk6WUcp3E";
 
       function initMap() {
           map = new google.maps.Map(document.getElementById('map'), {
@@ -21,18 +23,19 @@
 
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
-            var myLoc = {
+            myLoc = {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             };
 
             infoWindow.setPosition(myLoc);
-            infoWindow.setContent('Location found.');
+            infoWindow.setContent("i'm here!");
             infoWindow.open(map);
             map.setCenter(myLoc);
           }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
           });
+
         } else {
           // Browser doesn't support Geolocation
           handleLocationError(false, infoWindow, map.getCenter());
@@ -46,8 +49,14 @@
                               'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
       }
+
+
+
+
     </script>
+    
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTzy5IChl_s2sk4bd9JpT8ancQ3hd9X6Y&callback=initMap"
     async defer></script>
+  
   </body>
 </html>
