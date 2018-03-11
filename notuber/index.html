@@ -77,9 +77,20 @@
         request.onreadystatechange = function() {//Call a function when the state changes.
             if(request.readyState == 4 && request.status == 200) {
                 alert(request.responseText);
+                var carsAndPeopleText = request.response; 
+                var carsAndPeople = JSON.parse(carsAndPeopleText);
+                populateMap(carsAndPeople); 
+
             }   
         }
+        request.responseType = 'text'; 
         request.send(requestString);
+
+
+      }
+
+      function populateMap (carsAndPeople) {
+
       }
 
 
