@@ -17,9 +17,12 @@
     <div id="map"></div>
 
     <script>
-      var map, infoWindow, marker;
+      var map, infoWindow, marker, minDist;
       var myLoc = {lat: 0, lng:0 };
       var myUsername = "1vk6WUcp3E";
+      var myIcon = 'bunny.jpg'; 
+      var carIcon = 'car.png'; 
+      var passIcon = 'person.png'; 
 
       function initMap() {
           map = new google.maps.Map(document.getElementById('map'), {
@@ -27,7 +30,6 @@
             zoom: 14
           });
           
-        infoWindow = new google.maps.InfoWindow;
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
             myLoc = {
@@ -36,14 +38,12 @@
             };
             console.log(myLoc.lat, myLoc.lng);
 
-            infoWindow.setPosition(myLoc);
-            infoWindow.setContent(myUsername);
-            infoWindow.open(map);
             map.setCenter(myLoc);
 
             marker = new google.maps.Marker({
             position: myLoc,
             map: map,
+            icon: carIcon
             });
 
             rideRequest();
@@ -74,9 +74,8 @@
         var request = new XMLHttpRequest();
         request.open("POST", "https://jordan-marsh.herokuapp.com/rides", true);
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        request.onreadystatechange = function() {//Call a function when the state changes.
+        request.onreadystatechange = function() {
             if(request.readyState == 4 && request.status == 200) {
-                alert(request.responseText);
                 var carsAndPeopleText = request.response; 
                 var carsAndPeople = JSON.parse(carsAndPeopleText);
                 populateMap(carsAndPeople); 
@@ -89,11 +88,73 @@
 
       }
 
-      function populateMap (carsAndPeople) {
+    function populateMap (carsAndPeople) {
+        console.log(carsAndPeople.vehicles); 
 
-      }
+        var mode; 
+        var icon; 
+        var searchingFor; 
+        if (carsAndPeople.vehicles) {
+            mode = carsAndPeople.vehicles; 
+            icon = carIcon; 
+            searchingFor = "passenger";
+        }
+        if (carsAndPeople.passengers) {
+            mode = carsAndPeople.passengers; 
+            icon = passIcon; 
+            searchingFor = "vehicles";
+            console.log("looking for pass!", mode)
+        }
+        var myInfoDisplay = ""; 
+        if (mode.length > 0) {
+            minDist = 1000000000000; 
+            for (var i = 0; i < mode.length; i++) {
+                var loc = {
+                    lat: mode[i].lat,
+                    lng: mode[i].lng
+                }; 
 
+                marker = new google.maps.Marker({
+                    position: loc,
+                    map: map,
+                    icon: icon
+                });
 
+                var distMiles = milesAway(loc); 
+                var indInfoDisplay = mode.username + " miles away: " + distMiles; 
+                InfoWindow = new google.maps.InfoWindow;
+                InfoWindow.setContent = indInfoDisplay;
+
+                google.maps.event.addListener(marker, 'click', function () {
+                    infoWindow.setContent(this.content);
+                    infoWindow.open(map, this);
+                }); 
+
+                
+            }
+            myInfoDisplay = "Your Username: " + myUsername + " Nearest " + searchingFor + " is " + minDist + " miles away!"; 
+        }
+        else {
+            myInfoDisplay = "Your Username: " + myUsername + " There are no " + searchingFor + "s nearby"; 
+        }
+
+        
+        infoWindow = new google.maps.InfoWindow;
+        infoWindow.setPosition(myLoc);
+        infoWindow.setContent(myInfoDisplay);
+        infoWindow.open(map);
+        console.log("info window?");
+}
+
+    function milesAway(loc) {
+        var distMeters = google.maps.geometry.computeDistanceBetween(loc, myLoc); 
+        var distMiles = 0.000621371192 * distMeters; 
+
+        if (distMiles < minDist) {
+            minDist = distMiles; 
+        }
+        return distMiles; 
+    }
 
     </script>
     
