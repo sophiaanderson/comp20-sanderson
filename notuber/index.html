@@ -20,7 +20,7 @@
       var map, infoWindow, marker, minDist;
       var myLoc = {lat: 0, lng:0 };
       var myUsername = "1vk6WUcp3E";
-      var myIcon = 'bunny.jpg'; 
+      var myIcon = 'me.jpg'; 
       var carIcon = 'car.png'; 
       var passIcon = 'person.png'; 
 
@@ -43,7 +43,7 @@
             marker = new google.maps.Marker({
             position: myLoc,
             map: map,
-            icon: carIcon
+            icon: myIcon
             });
 
             rideRequest();
@@ -143,7 +143,6 @@
         infoWindow.setPosition(myLoc);
         infoWindow.setContent(myInfoDisplay);
         infoWindow.open(map);
-        console.log("info window?");
 }
 
     function milesAway(loc) {
