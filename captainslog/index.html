@@ -5,18 +5,19 @@
 <head>
     <meta charset="utf-8" />
     <title>Captain's Log</title>
-<!--     <link rel="stylesheet" href="style.css" /> -->
+    <link rel="stylesheet" href="style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
         
     $(document).ready(function() {
-        $("#log").append(storage.getItem('entry'));
+        $("#log").append(localStorage.getItem('entry'));
     
         readEntry();
     });
 
     function readEntry() {
-        
+      
+      $("#msg").bind("enterKey", function(e) {  
         var entryMsg = $("#msg").val(); 
 
         if (entryMsg != "") {
@@ -24,15 +25,25 @@
             var output = "<p>" + date + " - " + entryMsg + "</p";
 
             $("#log").prepend(output); 
+
+            if (localStorage.getItem('entry') == null) {
+                localStorage.setItem('entry', ""); 
+            }
+
+            var entryLog = entryMsg + localStorage.getItem('entry');
+            localStorage.setItem('entry', entryLog); 
         }
 
-        if (localStorage.get)
+        $("#msg").val("");  
 
-    }
+    });
 
-
-
-
+    $("#msg").keyup(function(e){
+        if(e.keyCode == 13) {
+            $(this).trigger("enterKey");
+        }
+    });
+}
 
     </script>
 </head>
