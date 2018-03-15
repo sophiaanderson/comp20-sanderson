@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Captain's Log</title>
+<!--     <link rel="stylesheet" href="style.css" /> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        
+    $(document).ready(function() {
+        $("#log").append(storage.getItem('entry'));
+    
+        readEntry();
+    });
+
+    function readEntry() {
+        
+        var entryMsg = $("#msg").val(); 
+
+        if (entryMsg != "") {
+            var date = new Date(); 
+            var output = "<p>" + date + " - " + entryMsg + "</p";
+
+            $("#log").prepend(output); 
+        }
+
+        if (localStorage.get)
+
+    }
+
+
+
+
+
+    </script>
+</head>
+
+<body>
+    <h1>Captain's Log</h1>
+    <h3>New entry: <input type="text" id="msg" name="msg" size="30" /></h3>
+    <div id="log"></div>
+</body>
+</html>
